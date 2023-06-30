@@ -30,7 +30,7 @@ ItemModel guava = ItemModel(
 ItemModel kiwi = ItemModel(
   description:
       'O melhor kiwi da região e que conta com o melhor preço de qualquer quitanda. Este item conta com vitaminas essenciais para o fortalecimento corporal, resultando em uma vida saudável.',
-  imgUrl: 'assets/fruits/apple.png',
+  imgUrl: 'assets/fruits/kiwi.png',
   itemName: 'Kiwi',
   price: 2.5,
   unit: 'un',
