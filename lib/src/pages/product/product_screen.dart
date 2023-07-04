@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/models/item_model.dart';
+
 import 'package:greengrocer/src/sevices/utils_services.dart';
+
+import '../common_widgets/quantity_widgets.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({
@@ -22,9 +25,7 @@ class ProductScreen extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: Hero(
-                  tag: item.imgUrl,
-                  child: Image.asset(item.imgUrl)),
+                child: Hero(tag: item.imgUrl, child: Image.asset(item.imgUrl)),
               ),
               Expanded(
                 child: Container(
@@ -58,11 +59,7 @@ class ProductScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 30,
-                            width: 70,
-                            color: Colors.red,
-                          ),
+                          QuantityWidget(),
                         ],
                       ),
 
