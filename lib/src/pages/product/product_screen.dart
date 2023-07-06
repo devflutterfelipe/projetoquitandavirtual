@@ -6,14 +6,22 @@ import 'package:greengrocer/src/sevices/utils_services.dart';
 
 import '../common_widgets/quantity_widgets.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   ProductScreen({
     super.key,
     required this.item,
   });
 
   final ItemModel item;
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
   final UtilsServices utilsServices = UtilsServices();
+
+  int cartItemQuantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,9 @@ class ProductScreen extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: Hero(tag: item.imgUrl, child: Image.asset(item.imgUrl)),
+                child: Hero(
+                    tag: widget.item.imgUrl,
+                    child: Image.asset(widget.item.imgUrl)),
               ),
               Expanded(
                 child: Container(
@@ -50,7 +60,7 @@ class ProductScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              item.itemName,
+                              widget.item.itemName,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -59,13 +69,21 @@ class ProductScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          QuantityWidget(),
+                          QuantityWidget(
+                            suffixText: widget.item.unit,
+                            value: cartItemQuantity,
+                            result: (int quantity) {
+                              setState(() {
+                                cartItemQuantity = quantity;
+                              });
+                            },
+                          ),
                         ],
                       ),
 
                       //Preço
                       Text(
-                        utilsServices.priceToCurrency(item.price),
+                        utilsServices.priceToCurrency(widget.item.price),
                         style: TextStyle(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
@@ -78,7 +96,7 @@ class ProductScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: SingleChildScrollView(
                             child: Text(
-                              item.description,
+                              widget.item.description,
                               style: const TextStyle(
                                 height: 1.5,
                               ),
