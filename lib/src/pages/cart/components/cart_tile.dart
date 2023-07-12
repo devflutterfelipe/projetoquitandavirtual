@@ -5,11 +5,21 @@ import 'package:greengrocer/src/sevices/utils_services.dart';
 
 import '../../../models/cart_item_model.dart';
 
-class CartTile extends StatelessWidget {
+class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
+  final Function(CartItemModel) remove;
 
-   CartTile({super.key, required this.cartItem});
+  const CartTile({
+    super.key, 
+    required this.cartItem,
+    required this.remove, 
+    });
 
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
 
   @override
@@ -23,7 +33,7 @@ class CartTile extends StatelessWidget {
         // imagem
 
         leading: Image.asset(
-          cartItem.item.imgUrl,
+          widget.cartItem.item.imgUrl,
           height: 60,
           width: 60,
         ),
@@ -31,7 +41,7 @@ class CartTile extends StatelessWidget {
         // Titulo
 
         title: Text(
-          cartItem.item.itemName,
+          widget.cartItem.item.itemName,
           style: const TextStyle(
             fontWeight: FontWeight.w500,
           ),
@@ -39,7 +49,7 @@ class CartTile extends StatelessWidget {
         // Total
 
         subtitle: Text(
-         utilsServices.priceToCurrency(cartItem.totalPrice()),
+         utilsServices.priceToCurrency(widget.cartItem.totalPrice()),
           style: TextStyle(
             color: CustomColors.customSwatchColor,
             fontWeight: FontWeight.bold,
@@ -49,9 +59,20 @@ class CartTile extends StatelessWidget {
         // Quantidade
 
         trailing: QuantityWidget(
-          suffixText: cartItem.item.unit,
-          value: cartItem.quantity,
-          result: (quantity) {},
+          suffixText: widget.cartItem.item.unit,
+          value: widget.cartItem.quantity,
+          result: (quantity) {
+            setState(() {
+              widget.cartItem.quantity = quantity;
+
+              if(quantity == 0){
+                // Remover item do carrinho
+                widget.remove(widget.cartItem);
+              }
+
+            });
+          },
+          isRemovable: true,
         ),
       ),
     );
