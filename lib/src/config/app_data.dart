@@ -1,5 +1,6 @@
 import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/item_model.dart';
+import 'package:greengrocer/src/models/user_model.dart';
 
 ItemModel apple = ItemModel(
   description:
@@ -77,12 +78,20 @@ List<CartItemModel> cartItems = [
     item: apple,
     quantity: 1,
   ),
-   CartItemModel(
+  CartItemModel(
     item: mango,
     quantity: 1,
   ),
-   CartItemModel(
+  CartItemModel(
     item: guava,
     quantity: 3,
   ),
 ];
+
+UserModel user = UserModel(
+  celular: '99 9 9999-9999',
+  cpf: "999.999.999-99",
+  email: "redesigninformatica@gmail.com",
+  name: 'Felipe Gomes',
+  senha: '',
+);
