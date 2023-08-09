@@ -3,6 +3,7 @@ import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/sevices/utils_services.dart';
 
 import '../../../models/order_model.dart';
+import 'order_status_widget.dart';
 
 class OrderTile extends StatelessWidget {
   final OrderModel order;
@@ -40,6 +41,7 @@ class OrderTile extends StatelessWidget {
               height: 150,
               child: Row(
                 children: [
+                // Lista de produtos
                   Expanded(
                     flex: 3,
                     child: ListView(
@@ -50,11 +52,22 @@ class OrderTile extends StatelessWidget {
                       }).toList(),
                     ),
                   ),
+                 
+                  // Divisão
+                  VerticalDivider(
+                    color: Colors.grey.shade300,
+                    thickness: 2,
+                    width: 8,
+                  ),
+
+                  // Status do pedido
                   Expanded(
                       flex: 2,
-                      child: Container(
-                        color: Colors.blue,
-                      )),
+                      child: OrderStatusWidget(
+                        status: order.status,
+                        isOverdue: order.overdueDateTime.isBefore(DateTime.now() ),
+                      ),
+                      ),
                 ],
               ),
             )
