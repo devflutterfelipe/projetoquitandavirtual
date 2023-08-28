@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/models/cart_item_model.dart';
+import 'package:greengrocer/src/pages/common_widgets/payment_dialog.dart';
 import 'package:greengrocer/src/sevices/utils_services.dart';
 
 import '../../../models/order_model.dart';
@@ -106,14 +107,22 @@ class OrderTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return PaymentDialog(
+                        order: order,
+                      );
+                    },
+                  );
+                },
                 icon: Image.asset(
                   'assets/app_images/pix.png',
                   height: 18,
                 ),
                 label: const Text('Ver QR Code Pix'),
               ),
-             
             ),
           ],
         ),
