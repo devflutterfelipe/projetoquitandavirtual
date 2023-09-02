@@ -6,10 +6,13 @@ import 'package:greengrocer/src/sevices/utils_services.dart';
 
 class ItemTile extends StatelessWidget {
   final ItemModel item;
+  final void Function(GlobalKey) cartAnimationMethod;
+  final GlobalKey imageGK = GlobalKey();
 
   ItemTile({
     super.key,
     required this.item,
+    required this.cartAnimationMethod,
   });
 
   final UtilsServices utilsServices = UtilsServices();
@@ -18,12 +21,11 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-
         // Conteúdo
         GestureDetector(
-          onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (c){
-              return  ProductScreen(item: item);
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (c) {
+              return ProductScreen(item: item);
             }));
           },
           child: Card(
@@ -41,7 +43,11 @@ class ItemTile extends StatelessWidget {
                   Expanded(
                     child: Hero(
                       tag: item.imgUrl,
-                      child: Image.asset(item.imgUrl)),
+                      child: Image.asset(
+                        item.imgUrl,
+                        key: imageGK,
+                      ),
+                    ),
                   ),
                   //Nome
                   Text(
@@ -82,7 +88,9 @@ class ItemTile extends StatelessWidget {
           top: 4,
           right: 4,
           child: GestureDetector(
-            onTap: (){},
+            onTap: () {
+              cartAnimationMethod(imageGK);
+            },
             child: Container(
               height: 40,
               width: 35,
